@@ -1,7 +1,7 @@
-EarthStation (v1.0)
+EarthStation (v0.4)
 ===================
-This project was done over the course of two years as a senior capstone projects at UC Santa Cruz. The original ARS Ground Station team created a foundationss
-
+This software is part of a larger project, to build a working
+Ground Station for Satellite Communication as part of the Amateur Radio Service at UCSC.
 
 Introduction
 ------------
@@ -16,39 +16,53 @@ We considered many different approaches to building this app before settling on 
 ###ARS Ground Station Team Rev. 2
 
 **Kayla Hidalgo** *KK6JGU*
-Antenna Design
 
-**Julie T. Do** *KK6JHF*
-Hardware Design, UI Support
+Team Lead, Antenna Design
+
+**Julie Do** *KK6JHF*
+
+Microcontroller Design
 
 **William Ye** *KK6JGV*
-Software/UI Design, Hardware Support
 
-###ARS Ground Station Team
+Software Design
+
+###ARS Ground Station Team 
 
 **Jason Ragland** *AG6RM*
+
 Team Lead, Antenna Design
 
 **Andrew Martino** *KJ6RFK*
+
 Power, Motor, and Mechanical Systems
 
 **Sander Middour** *KK6BSI*
+
 Digital Motor Control
 
 **Shashwat Kandadai** *KK6BSH*
+
 Tracking Software
 
 ###Mentors
 **Professor Steve Petersen** *AC6P*
+
 **Professor John Vesecky** *AE6TL*
+
 **Paul Naud**
 
 ###Acknowledgments
 [Professor Steve Petersen (AC6P)](http://www.soe.ucsc.edu/people/petersen)
+
 [TS Kelso](http://celestrak.com/webmaster.asp)
+
 [Paul Lewis](http://www.aerotwist.com/)
+
 [Jerome Etienne](http://learningthreejs.com/)
+
 [Stemkoski](http://stemkoski.github.io/Three.js/)
+
 [Stack Overflow](stackoverflow.com)
 
 Major TODOs

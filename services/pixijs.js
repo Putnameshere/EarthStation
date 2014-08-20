@@ -1,5 +1,8 @@
 /*
- * EarthStation v0.3
+ * EarthStation v1.0
+ * (c) 2014 William Ye & Julie T. Do @ UCSC
+ * https://github.com/Putnameshere/EarthStation
+ *
  * pixijs.js
  * PLANETARIUM VIEW:
  *		- Basic planetarium view with azimuth/elevation guides showing the
@@ -293,9 +296,6 @@ function PixiJS(WorkerManager) {
 		//console.log("motor az="+mot_az+", el="+mot_el);
 		
 		//console.log("sat_item.satnum="+sat_item.satnum);
-		// *~*~*~*~ what was i trying to do? ~*~*~*~*
-		// sat_item.____ definitions are in track_sat.js
-		// doesn't look like there's one for a name?
 		
 		if(!sat_table[satnum]) {
 			sat_table[satnum] = {};
@@ -462,18 +462,17 @@ function PixiJS(WorkerManager) {
 						los[0] = pos[0];
 						los[1] = pos[1];
 						los[2] = i;
-						
-						
+
 						los_set = true;
 					}
 				} else {
 					if (pos[1]>=0) {
-						aos_set = true;
+						//aos_set = true;
 						//console.log("pos="+pos);
 						sat_path[satnum].lineTo(
 							(azel2pixi(pos[0],pos[1])).x,
 							(azel2pixi(pos[0],pos[1])).y );
-					} else if (aos_set && !los_set && pos[1]<0 ) {
+					} else if (!los_set && pos[1]<0 ) {
 						los[0] = pos[0];
 						los[1] = pos[1];
 						los[2] = i;
@@ -484,15 +483,18 @@ function PixiJS(WorkerManager) {
 				}
 			}
 			
-			// Add LOS markers
+			// Add AOS/LOS markers
 			sat_aos[satnum] = new PIXI.Text("AOS",
 				{font:"12px Arial", fill:"white"}
 				);
 			sat_aos[satnum].position = azel2pixi(aos[0], aos[1]);
+			if(!aos_set) sat_aos[satnum].visible = false;
+			
 			sat_los[satnum] = new PIXI.Text("LOS",
 				{font:"12px Arial", fill:"white"}
 				);
 			sat_los[satnum].position = azel2pixi(los[0], los[1]);
+			if(!los_sat) sat_los[satnum].visible = false;
 			
 			stage.addChild(sat_aos[satnum]);
 			stage.addChild(sat_los[satnum]);
@@ -571,8 +573,8 @@ function PixiJS(WorkerManager) {
 		if (az>360) az = az - 360;
 		
 		// scale to stage
-		pixi.x = pixi.x * (horizon_radius / 90)	// 90 degees
-		pixi.y = pixi.y * (horizon_radius / 90)
+		pixi.x = pixi.x * (horizon_radius / 90);	// 90 degees
+		pixi.y = pixi.y * (horizon_radius / 90);
 		// add offset
 		pixi.x = pixi.x + planetarium_center.x;
 		pixi.y = pixi.y + planetarium_center.y;

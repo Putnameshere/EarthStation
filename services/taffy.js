@@ -1,10 +1,8 @@
-
-
-
-
-
-
-
+/*
+ * EarthStation v1.0
+ * (c) 2014 William Ye & Julie T. Do @ UCSC
+ * https://github.com/Putnameshere/EarthStation 
+ */
 
 function Taffy(WorkerManager){
 var json,db;
