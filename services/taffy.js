@@ -29,7 +29,8 @@ var xobj = new XMLHttpRequest();
 //find info in sat
 function find_info(satnum){
 	console.log(satnum);
-	//satnum = satnum.slice(0, - 1)
+	satnum = satnum.slice(0, - 1);
+	console.log(satnum);
 	var records = db().get();
 	for(i = 0; i<records.length; i++){
 	     if(records[i].Name == satnum){
@@ -47,8 +48,8 @@ function find_freq(satnum){
 
 var upfreq;
 var downfreq 
-//satnum = satnum.slice(0, - 1);
-console.log("here");
+satnum = satnum.slice(0, - 1);
+console.log(satnum);
 	var records = db().get();
 	for(i = 0; i<records.length; i++){
 	     if(records[i].Name == satnum){
@@ -59,7 +60,7 @@ console.log("here");
 	       }
 	    };
 
-return [upfreq,upfreq];
+return [upfreq,downfreq];
 
 };
 

@@ -1,4 +1,5 @@
 /*
+ * EarthStation v0.3
  * EarthStation v1.0
  * (c) 2014 William Ye & Julie T. Do @ UCSC
  * https://github.com/Putnameshere/EarthStation
@@ -10,6 +11,7 @@
  *		- Side bar with more specific information about the satellite angles
  * TO-DO:
  * 	- Show motor marker
+ *  - Path: still glitches for multiple passes
  * 	- Display AOS/LOS: need to convert gmst to utc
  */
 
@@ -98,13 +100,13 @@ function PixiJS(WorkerManager) {
 		var planetarium_guides = new PIXI.Graphics();
 		planetarium_guides.position = planetarium_center;
 		planetarium_guides.beginFill(0xFFFFFF, 0);		// elevation circles
-		planetarium_guides.lineStyle(3, 0x206676);
+		planetarium_guides.lineStyle(3, 0x226F95);
 		planetarium_guides.drawCircle(0, 0, horizon_radius);
 		planetarium_guides.lineStyle(1, 0xCCCCCC);
 		planetarium_guides.drawCircle(0, 0, 2*horizon_radius/3);
 		planetarium_guides.drawCircle(0, 0, horizon_radius/3);
 		planetarium_guides.endFill()
-		planetarium_guides.lineStyle(1, 0x206676);		// azimuth lines
+		planetarium_guides.lineStyle(1, 0x226F95);		// azimuth lines
 		planetarium_guides.moveTo(0, -horizon_radius);
 		planetarium_guides.lineTo(0,  horizon_radius);
 		planetarium_guides.moveTo(-horizon_radius, 0);
@@ -114,14 +116,14 @@ function PixiJS(WorkerManager) {
 		var azimuth_guides = new PIXI.Graphics();
 		azimuth_guides.position = azimuth_center;
 		azimuth_guides.beginFill(0xFFFFFF, 0);
-		azimuth_guides.lineStyle(3, 0x206676);
+		azimuth_guides.lineStyle(3, 0x226F95);
 		azimuth_guides.drawCircle(0, 0, compass_radius);
 		
 		// Add in elevation compass
 		var elevation_guides = new PIXI.Graphics();
 		elevation_guides.position = elevation_center;
 		elevation_guides.beginFill(0xFFFFFF, 0);
-		elevation_guides.lineStyle(3, 0x206676);
+		elevation_guides.lineStyle(3, 0x226F95);
 		elevation_guides.drawCircle(0, 0, compass_radius);
 		
 		//var test = new PIXI.Graphics();
@@ -284,18 +286,14 @@ function PixiJS(WorkerManager) {
 	function live_update_callback(data) {
 		var sat_item = data.sat_item;					// data!!!
 		var satnum = sat_item.satnum;
-		
-		// use sat_item.look_angles.x or .look_angles[0]?
-		// scope.sat_table[satnum]["look_angles"] = sat_item.look_angles;
+		console.log(data);
 		var sat_az = rad2deg(sat_item.look_angles[0]);
 		var sat_el = rad2deg(sat_item.look_angles[1]);
+
+		var mot_az = rad2deg(data.motor_azimuth);
+		var mot_el = rad2deg(data.motor_elevation);
+		console.log(sat_item.look_angles[0]);
 		
-		//var mot_az = rad2deg(sat_item.motor_azimuth);
-		var mot_az = rad2deg(sat_item.motor_azimuth);
-		var mot_el = rad2deg(sat_item.motor_elevation);
-		//console.log("motor az="+mot_az+", el="+mot_el);
-		
-		//console.log("sat_item.satnum="+sat_item.satnum);
 		
 		if(!sat_table[satnum]) {
 			sat_table[satnum] = {};
@@ -303,7 +301,7 @@ function PixiJS(WorkerManager) {
 		if(sat_table[satnum]["is_tracking"]) {
 			//console.log("Does it update the satellite marker?");
 			update_satellite_marker(satnum, sat_az, sat_el);
-			update_motor_marker(mot_az, mot_el);
+			//update_motor_marker(mot_az, mot_el);
 		};
 	};
 	
@@ -320,17 +318,17 @@ function PixiJS(WorkerManager) {
 		};
 		if(sat_table[satnum]["is_tracking"]) {
 			if(sat_table[satnum]["path_ecf"]) {
-				console.log("calls update_path()");
+				//console.log("calls update_path()");
 				update_path(satnum, sat_item["lookangles_list"], sat_item['gmst_list']);
 			} else {
-				console.log("calls add_path()");
+				//console.log("calls add_path()");
 				add_path(satnum, sat_item["lookangles_list"], sat_item['gmst_list']);
 			};
 		};
 	};
 	
 	function hide_pixijs() {
-		console.log("hiding pixijs");
+		//console.log("hiding pixijs");
 		stop_animation();
 		for (var i = stage.children.length - 1; i >= 0; i--) {
 			stage.removeChild(stage.children[i]);
@@ -342,11 +340,13 @@ function PixiJS(WorkerManager) {
 	/* add_satellite()
 		Called by the UI and adds the satellite info into Pixi
 	 */
-	function add_satellite(satnum, satrec) {
+	 //Added in name
+	function add_satellite(satnum, satrec, name) {
 		if(!sat_table[satnum]) {
 			sat_table[satnum] = {};
 			sat_table[satnum]["is_tracking"] = true;
-
+            sat_table[satnum]["name"] = name;
+			console.log(name);
 			console.log("hi friend, satnum="+satnum+", satrec="+satrec);
 			add_satellite_marker(satnum);
 			
@@ -362,17 +362,17 @@ function PixiJS(WorkerManager) {
 	 */
 	function add_satellite_marker(satnum) {
 		sat_marker[satnum] = new PIXI.Graphics();
-		sat_marker[satnum].lineStyle(1, 0xFFFFFF, 1);
+		sat_marker[satnum].lineStyle(1, 0xF9BD77, 1);
 		sat_marker[satnum].drawCircle(0, 0, horizon_radius/30);
 		sat_marker[satnum].endFill()
-		sat_marker[satnum].lineStyle(1, 0xFFFFFF);		// azimuth lines
+		sat_marker[satnum].lineStyle(1, 0xF9BD77);		// azimuth lines
 		sat_marker[satnum].moveTo(0, -horizon_radius/20);
 		sat_marker[satnum].lineTo(0,  horizon_radius/20);
 		sat_marker[satnum].moveTo(-horizon_radius/20, 0);
 		sat_marker[satnum].lineTo( horizon_radius/20, 0);
 		
 		sat_text[satnum] = new PIXI.Text(
-			"SAT",													// change this later
+			sat_table[satnum]["name"],													// change this later
 			{font:"12px Arial", fill:"white"}
 		);
 		//sat_text[satnum].anchor.x = sat_text[satnum].y = 0;
@@ -434,7 +434,7 @@ function PixiJS(WorkerManager) {
 			
 			sat_path[satnum] = new PIXI.Graphics();
 			sat_path[satnum].beginFill(0xFFFFFF, 0);
-			sat_path[satnum].lineStyle(1, 0x777777);
+			sat_path[satnum].lineStyle(1, 0xEB6D2D);
 			
 			// Step through list
 			for(var i=0; i<lookangles_list.length; i++) {
@@ -467,12 +467,12 @@ function PixiJS(WorkerManager) {
 					}
 				} else {
 					if (pos[1]>=0) {
-						//aos_set = true;
+						aos_set = true;
 						//console.log("pos="+pos);
 						sat_path[satnum].lineTo(
 							(azel2pixi(pos[0],pos[1])).x,
 							(azel2pixi(pos[0],pos[1])).y );
-					} else if (!los_set && pos[1]<0 ) {
+					} else if (aos_set && !los_set && pos[1]<0 ) {
 						los[0] = pos[0];
 						los[1] = pos[1];
 						los[2] = i;
@@ -488,13 +488,10 @@ function PixiJS(WorkerManager) {
 				{font:"12px Arial", fill:"white"}
 				);
 			sat_aos[satnum].position = azel2pixi(aos[0], aos[1]);
-			if(!aos_set) sat_aos[satnum].visible = false;
-			
 			sat_los[satnum] = new PIXI.Text("LOS",
 				{font:"12px Arial", fill:"white"}
 				);
 			sat_los[satnum].position = azel2pixi(los[0], los[1]);
-			if(!los_sat) sat_los[satnum].visible = false;
 			
 			stage.addChild(sat_aos[satnum]);
 			stage.addChild(sat_los[satnum]);
@@ -533,7 +530,8 @@ function PixiJS(WorkerManager) {
 	
 	function update_motor_marker(az, el) {
 		//motor_marker.visible = true;
-		motor_marker.position = azel2pixi(az,el);
+		console.log("az="+az+", el="+el);
+		motor_marker.position = azel2pixi(az, el);
 	}
 	
 	
@@ -605,6 +603,7 @@ function PixiJS(WorkerManager) {
 		stop_animation: 			stop_animation,
 		add_satellite: 			add_satellite,
 		remove_satellite: 		remove_satellite,
+		update_motor_marker:	update_motor_marker,
 		add_to_time_offset:		add_to_time_offset,
 		reset_time_offset:		reset_time_offset,
 		get_time:					get_time,

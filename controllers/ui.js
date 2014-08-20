@@ -60,6 +60,8 @@ function UICtrl($scope, ThreeJS, WorkerManager, Motors, Radios, Taffy, PixiJS) {
 		$scope.sat_table[satnum] = sat_item;
 		$scope.sat_table[satnum]["uplink_frequency"] = 450000000;
 		$scope.sat_table[satnum]["downlink_frequency"] = 145000000;
+		$scope.sat_table[satnum]["name"] = sat_item.name;
+		console.log(sat_item.name);
 	  });
 	  storage.set($scope.sat_table);
 	};
@@ -86,7 +88,9 @@ function UICtrl($scope, ThreeJS, WorkerManager, Motors, Radios, Taffy, PixiJS) {
 		
 		$scope.sat_table[satnum]["motor_azimuth"] = motor_azimuth;
 		$scope.sat_table[satnum]["motor_elevation"] = motor_elevation;
-		//console.log("motor az="+motor_azimuth+", el="+motor_elevation);
+		console.log("motor az="+motor_azimuth+", el="+motor_elevation);
+		
+		PixiJS.update_motor_marker(motor_azimuth, motor_elevation);
 		
 		//$scope.sat_table[satnum]["motor_azimuth"] = sat_item.motor_azimuth;
 		//$scope.sat_table[satnum]["motor_elevation"] = sat_item.motor_elevation;
@@ -137,7 +141,7 @@ function UICtrl($scope, ThreeJS, WorkerManager, Motors, Radios, Taffy, PixiJS) {
   
   function select_sat (satnum, sat){
 	  ThreeJS.add_satellite(satnum, sat.satrec);
-	  PixiJS.add_satellite(satnum, sat.satrec);
+	  PixiJS.add_satellite(satnum, sat.satrec,$scope.sat_table[satnum]["name"]);
 	  sat.selected = true;
 	  selected_sats[satnum] = sat;
 	  current_satellite = sat.name;
@@ -284,10 +288,14 @@ function UICtrl($scope, ThreeJS, WorkerManager, Motors, Radios, Taffy, PixiJS) {
   };
 
   
-    $scope.load_info = function(){
+    $scope.load_info = function(sat){
   console.log(current_satellite);
+  console.log(sat)
+ var dbKeep;
 	Taffy.find_info(current_satellite);
-	Taffy.find_freq(current_satellite);
+	dbKeep = Taffy.find_freq(current_satellite);
+	sat.uplink_frequency = dbKeep[0];
+	sat.downlink_frequency = dbKeep[1];
   };
   
   
@@ -331,6 +339,7 @@ function UICtrl($scope, ThreeJS, WorkerManager, Motors, Radios, Taffy, PixiJS) {
 	  $scope.$apply(function() {
 		motor_azimuth = motor_data["motor_azimuth"];
 		motor_elevation = motor_data["motor_elevation"];
+		// ???
 		$scope.sat_table[satnum]["motor_azimuth"] = motor_data["motor_azimuth"];
 		$scope.sat_table[satnum]["motor_elevation"] = motor_data["motor_elevation"];
 		$scope.sat_table[satnum]["motor_status"] = motor_data["motor_status"];
@@ -349,13 +358,6 @@ function UICtrl($scope, ThreeJS, WorkerManager, Motors, Radios, Taffy, PixiJS) {
   /*--- temp functions (for demo purposes) ---*/
   
   /*
-  $scope.start_motors = function (satnum) {
-	Motors.start_motors(satnum);
-  };
-  
-  $scope.stop_motors = function (satnum) {
-	Motors.stop_motors(satnum);
-  };
   
   $scope.up_motors = function (satnum) {
 	Motors.move_motors_up(satnum);
@@ -384,6 +386,15 @@ function UICtrl($scope, ThreeJS, WorkerManager, Motors, Radios, Taffy, PixiJS) {
   //$scope.stop_motor_tracking = function (satnum) {
   //  Motors.stop_motor_tracking(satnum);
   //};
+  
+  
+  $scope.start_motors = function (satnum) {
+	Motors.start_motors(satnum);
+  };
+  
+  $scope.stop_motors = function (satnum) {
+	Motors.stop_motors(satnum);
+  };
 
   $scope.close_motors = function (satnum) {
 	Motors.close_motors (satnum);
@@ -398,7 +409,11 @@ function UICtrl($scope, ThreeJS, WorkerManager, Motors, Radios, Taffy, PixiJS) {
 	  $scope.$apply(function() {
 		$scope.sat_table[satnum]["radio_main_frequency"] = radio_data["radio_main_frequency"];
 		$scope.sat_table[satnum]["radio_sub_frequency"]  = radio_data["radio_sub_frequency"];
+		$scope.sat_table[satnum]["radio_main_display"] = radio_data["radio_main_display"];
+		$scope.sat_table[satnum]["radio_sub_display"]  = radio_data["radio_sub_display"];
 		$scope.sat_table[satnum]["offset"]  = radio_data["offset"];
+		$scope.sat_table[satnum]["radio_transmit_frequency"] = radio_data["radio_transmit_frequency"];
+		$scope.sat_table[satnum]["radio_receive_frequency"] = radio_data["radio_receive_frequency"];;
 	  });	// html > this > radios.js
 	};
 

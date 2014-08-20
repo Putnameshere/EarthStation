@@ -6,6 +6,7 @@
  *
  * EarthStation v0.3
  * (c) 2013 Shashwat Kandadai and UCSC
+ * edited by William Ye 2014 and Julie Do 2014
  * https://github.com/shashwatak/EarthStation
  * License: MIT
  */
@@ -47,12 +48,10 @@
   <div>
   <center>
   
-  <button class="input" ng-click="hide_the_world()">Earth/CrossSection</button>
   <button class="input" ng-click="switch_to_ground_camera()">Ground</button>
   <button class="input" ng-click="switch_to_space_view()">Space View</button>
-  
+  <button class="input" ng-click="center_observer()">Center</button>
   <button class="input" ng-click="access_db()">Load DB</button>
-  <button class="input" ng-click="load_info(sat)">Load sat info</button>
   </center>
   </div>
   
@@ -77,6 +76,7 @@
         </p>
         <p class="sidebar_text">Downlink (Main)frequency:
           <input class="input" ng-model="sat.downlink_frequency"></input>
+		  <button class="input" ng-click="load_info(sat)">Load sat info</button>
         </p>
         <p class="sidebar_text">Doppler Factor: {{sat.doppler_factor}}</p>
         <p class="sidebar_text">Position:
@@ -132,6 +132,18 @@
             </p>
 			<p class="sidebar_text">
               LSB: {{sat.radio_sub_frequency}}
+            </p>
+			<p class="sidebar_text">
+              RX: {{sat.radio_transmit_frequency}}
+            </p>
+			<p class="sidebar_text">
+              TX: {{sat.radio_receive_frequency}}
+            </p>
+			<p class="sidebar_text">
+              Transmit Display: {{sat.radio_main_display}}
+            </p>
+			<p class="sidebar_text">
+              Receive Display: {{sat.radio_sub_display}}
             </p>
 			<p class="sidebar_text">
 			  Offset: {{sat.offset}}
