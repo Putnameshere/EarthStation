@@ -1,6 +1,6 @@
 EarthStation (v1.0)
 ===================
-This project was done over the course of two years as a senior capstone projects at UC Santa Cruz. The original ARS Ground Station team created a foundationss
+This project was done over the course of two years as a senior capstone projects at UC Santa Cruz. The original ARS Ground Station team created the foundation, while the ARS Ground Station Rev. 2 team worked to finalize it.
 
 
 Introduction
@@ -16,40 +16,50 @@ We considered many different approaches to building this app before settling on 
 ###ARS Ground Station Team Rev. 2
 
 **Kayla Hidalgo** *KK6JGU*
-Antenna Design
+
+Antenna Design Lead
 
 **Julie T. Do** *KK6JHF*
-Hardware Design, UI Support
+
+Hardware Control Design Lead, UI Support
 
 **William Ye** *KK6JGV*
-Software/UI Design, Hardware Support
+
+Software/UI Design Lead, Antenna Construction
 
 ###ARS Ground Station Team
 
 **Jason Ragland** *AG6RM*
+
 Team Lead, Antenna Design
 
 **Andrew Martino** *KJ6RFK*
+
 Power, Motor, and Mechanical Systems
 
 **Sander Middour** *KK6BSI*
+
 Digital Motor Control
 
 **Shashwat Kandadai** *KK6BSH*
+
 Tracking Software
 
 ###Mentors
 **Professor Steve Petersen** *AC6P*
+
 **Professor John Vesecky** *AE6TL*
+
 **Paul Naud**
 
 ###Acknowledgments
-[Professor Steve Petersen (AC6P)](http://www.soe.ucsc.edu/people/petersen)
-[TS Kelso](http://celestrak.com/webmaster.asp)
-[Paul Lewis](http://www.aerotwist.com/)
-[Jerome Etienne](http://learningthreejs.com/)
-[Stemkoski](http://stemkoski.github.io/Three.js/)
-[Stack Overflow](stackoverflow.com)
+-	[Professor Steve Petersen (AC6P)](http://www.soe.ucsc.edu/people/petersen)
+-	[TS Kelso](http://celestrak.com/webmaster.asp)
+-	[Paul Lewis](http://www.aerotwist.com/)
+-	[Jerome Etienne](http://learningthreejs.com/)
+-	[Stemkoski](http://stemkoski.github.io/Three.js/)
+-	[Stack Overflow](stackoverflow.com)
+-	All of our fellow classmates from UC Santa Cruz, Jack Baskin School of Engineering 
 
 Major TODOs
 ===========
