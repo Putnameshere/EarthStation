@@ -12,6 +12,8 @@ The goals of this software are to make satellite radio contacts:
 
 We considered many different approaches to building this app before settling on making a Google Chrome Packaged App. High on our list of priorities was cross OS support, and Chrome is available on all major OSs. The Packaged App approach allows us to access USB and COM ports, to manipulate external hardware. Further, a Packaged App is installed on the user's computer, which means it can run completely offline. Finally, the relatively new `performance.now()` function gives us microsecond precise timing.
 
+The basics of this program is that it extrapolates satellite position based on TLE data, which is a mathematical model of a satellite's orbit, from the Celestrak website. 
+
 
 ###ARS Ground Station Team Rev. 2
 
@@ -70,7 +72,7 @@ Major TODOs
 -   Sorted, filterable, collapsible, hide-able, list of sats.
 -   Tooltips with opentip.
 -   ThreeJS mousehover detection.
--   Geodetic-Normalized and ECI sat paths display.
+-   Complete Database and auto-read of TLE data.
 -   Stargazer mode (upwards view of Az/El).
     -   Displays motors heading.
 
