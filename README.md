@@ -12,7 +12,8 @@ The goals of this software are to make satellite radio contacts:
 
 We considered many different approaches to building this app before settling on making a Google Chrome Packaged App. High on our list of priorities was cross OS support, and Chrome is available on all major OSs. The Packaged App approach allows us to access USB and COM ports, to manipulate external hardware. Further, a Packaged App is installed on the user's computer, which means it can run completely offline. Finally, the relatively new `performance.now()` function gives us microsecond precise timing.
 
-The basics of this program is that it extrapolates satellite position based on TLE data, which is a mathematical model of a satellite's orbit, from the Celestrak website. 
+The basics of this program is that it extrapolates satellite position based on TLE(Two-Line Element) data, which is a mathematical model of a satellite's orbit, from the Celestrak website. After the data is processed and put through numerous algorithms, the extracted results from SGP4/SDP4 will generate a position vector with its velocity. Because the program needs to be as efficient as possible for the user (Since we are using a directional antenna radiating a narrow beam), the program constantly calculates the algorithm and is updated at real-time. 
+
 
 
 ###ARS Ground Station Team Rev. 2
@@ -73,6 +74,7 @@ Major TODOs
 -   Tooltips with opentip.
 -   ThreeJS mousehover detection.
 -   Complete Database and auto-read of TLE data.
+-   Selection of Satellite through clicking the image (Mouse/Object collision detection implemented) 
 -   Stargazer mode (upwards view of Az/El).
     -   Displays motors heading.
 
